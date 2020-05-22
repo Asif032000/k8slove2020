@@ -8,7 +8,13 @@ import os for i in range(1,11): os.system('kubectl run adhoc{} --image=alpine --
  /////////////////////////////////////////////////////////////////
  mailing the output :
  '
- kubectl get po,svc >> output.txt 
+ kubectl get pods --all-namespaces -o jsonpath="{..name}" |tr -s '[[:space:]]' '\n' | sort | uniq -c > output.txt
+ kubectl get svc --all-namespaces -o jsonpath="{..name}" |tr -s '[[:space:]]' '\n' | sort | uniq -c  >> output.txt
+ 
+ 
+ 
+ 
+ 
  
  //in the same dir create a py script :
  mail.py:
